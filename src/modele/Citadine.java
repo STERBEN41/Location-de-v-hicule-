@@ -25,8 +25,6 @@ public class Citadine extends Vehicule {
         return this.multiplicateurPrix;
     }
 
-    // TODO 6 (optionnel mais conseillé) : redéfinis toString() pour inclure
-    // multiplicateurPrix, en réutilisant super.toString() plutôt que tout réécrire
     @Override
     public String toString() {
         String base = super.toString();

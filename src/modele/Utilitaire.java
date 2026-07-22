@@ -28,7 +28,7 @@ public class Utilitaire extends Vehicule {
     @Override
     public String toString() {
         String base = super.toString();
-        base = base.substring(0, base.length() - 1); // on retire le dernier '}'
+        base = base.substring(0, base.length() - 1);
         return base + " , multiplicateurPrix : " + multiplicateurPrix + "}";
     }
 

@@ -28,7 +28,7 @@ public class SUV extends Vehicule {
     @Override
     public String toString() {
         String base = super.toString();
-        base = base.substring(0, base.length() - 1); // on retire le dernier '}'
+        base = base.substring(0, base.length() - 1); // on retire le dernier element "}" qui se trouve dans Vehicule
         return base + " , multiplicateurPrix : " + multiplicateurPrix + "}";
     }
 
