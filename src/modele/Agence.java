@@ -59,8 +59,6 @@ public class Agence {
         return resultats;
     }
 
-    // Getters
-
     // Clients
 
     public void ajouterClient(Client c) {
@@ -73,17 +71,61 @@ public class Agence {
 
     // Reservations
 
+
+    // Point d'entrée appelé quand un Client choisit un véhicule et des dates 
+    // on cree la reservation on change le statut et onajoute à reservation 
+    public Reservation validerReservation(Client client, Vehicule vehicule,
+                                          LocalDate dateDebut, LocalDate dateFin)
+            throws VehiculeIndisponibleException {
+
+        if (!vehicule.estDisponible()) {
+            throw new VehiculeIndisponibleException(
+                    "Le véhicule " + vehicule.getImmatriculation() + " n'est pas disponible pour ces dates.");
+        }
+
+        Reservation reservation = new Reservation(client, vehicule, dateDebut, dateFin);
+        reservation.confirmer();
+        vehicule.changerStatut(StatutVehicule.RESERVE);
+        reservations.add(reservation);
+        return reservation;
+    }
+
     public List<Reservation> getReservations() {
         return reservations;
     }
 
+    // Retour 
+    // Le Gestionnaire signale le retour d'un véhicule. On retrouve nous-mêmes
+    // la réservation active correspondante on facture, puis on libère le véhicule.
+    public double enregistrerRetour(Vehicule vehicule) throws VehiculeIndisponibleException {
+        Reservation reservation = trouverReservationActive(vehicule);
+        if (reservation == null) {
+            throw new VehiculeIndisponibleException(
+                    "Aucune réservation active trouvée pour le véhicule " + vehicule.getImmatriculation());
+        }
+
+        double montantFinal = reservation.calculerMontant();
+        vehicule.changerStatut(StatutVehicule.DISPONIBLE);
+        return montantFinal;
+    }
 
     // Méthodes de recherche 
-
+    // On parcours la flotte on compare les immatriculations une fois trouvé on retourne le vehicule
     private Vehicule trouverVehiculeParImmatriculation(String immatriculation) {
         for (Vehicule v : flotte) {
             if (v.getImmatriculation().equals(immatriculation)) {
                 return v;
+            }
+        }
+        return null;
+    }
+
+    //On parcours les reservation avec comme paramètre le vehicule si on trouve le vehicule
+    // et si la reservation est active on retourne le vehicule.
+    private Reservation trouverReservationActive(Vehicule vehicule) {
+        for (Reservation r : reservations) {
+            if (r.getVehicule().equals(vehicule) && r.estActive()) {
+                return r;
             }
         }
         return null;
