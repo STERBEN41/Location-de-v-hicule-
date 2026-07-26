@@ -3,8 +3,8 @@ package modele;
 public abstract class Utilisateur {
 
     // Attributs
-    private String email ;
-    private String password ;
+    protected String email ;
+    protected String password ;
 
     // Constructeur
     public Utilisateur(String email, String password) {
