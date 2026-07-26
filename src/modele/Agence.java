@@ -6,6 +6,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe centrale du système : orchestre la flotte, les clients
+ * et les réservations. Correspond à la classe "Agence" du diagramme
+ * de classes ; ses méthodes publiques sont les points d'entrée appelés
+ * par Client et Gestionnaire dans les diagrammes de séquence.
+ */
+
 public class Agence {
 
     private List<Vehicule> flotte;
@@ -20,7 +27,6 @@ public class Agence {
     }
 
     // flotte (appelé par Gestionnaire)
-
     public void ajouterVehicule(Vehicule v) {
         flotte.add(v);
     }
@@ -73,7 +79,7 @@ public class Agence {
 
 
     // Point d'entrée appelé quand un Client choisit un véhicule et des dates 
-    // on cree la reservation on change le statut et onajoute à reservation 
+    // on cree la reservation on change le statut et on ajoute à reservation 
     public Reservation validerReservation(Client client, Vehicule vehicule,
                                           LocalDate dateDebut, LocalDate dateFin)
             throws VehiculeIndisponibleException {
@@ -87,6 +93,7 @@ public class Agence {
         reservation.confirmer();
         vehicule.changerStatut(StatutVehicule.RESERVE);
         reservations.add(reservation);
+        client.ajouterReservation(reservation); // permet de garder la liste du client synchronisée
         return reservation;
     }
 
@@ -105,6 +112,7 @@ public class Agence {
         }
 
         double montantFinal = reservation.calculerMontant();
+        reservation.cloturer();
         vehicule.changerStatut(StatutVehicule.DISPONIBLE);
         return montantFinal;
     }

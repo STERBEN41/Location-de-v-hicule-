@@ -12,7 +12,7 @@ public abstract class Vehicule {
     private StatutVehicule statutVehicule; // Attribut appartenant à la class Statutvehicule
 
     // Constructeur 
-    Vehicule(int idVehicule, String immatriculation, String marque, String modele, String categorie, Double tarifBase) {
+    public Vehicule(int idVehicule, String immatriculation, String marque, String modele, String categorie, Double tarifBase) {
         this.idVehicule = idVehicule;
         this.immatriculation = immatriculation;
         this.marque = marque;
@@ -24,7 +24,7 @@ public abstract class Vehicule {
 
     // Methodes
     public boolean estDisponible() {
-        return this.statutVehicule == StatutVehicule.DISPONIBLE
+        return this.statutVehicule == StatutVehicule.DISPONIBLE;
     }
 
     public void changerStatut(StatutVehicule nouveauStatut) {
@@ -46,11 +46,11 @@ public abstract class Vehicule {
         return this.marque;
     }
 
-    public String getModel() {
+    public String getModele() {
         return this.modele;
     }
 
-    public String getCategory() {
+    public String getCategorie() {
         return this.categorie;
     }
 
