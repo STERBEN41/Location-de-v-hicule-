@@ -1,94 +1,49 @@
 package modele;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Resrvation {
-
-    // compteur statique pour auto-incrémenté l'id unique
+public class Reservation {
     private static int compteur = 1;
-
-    // Attribut 
     private int idReservation;
     private Client client;
     private Vehicule vehicule;
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private double montantTotal;
-    private boolean active;
+    private boolean estActive;
 
-    // Constructeur
-    public Reservation(Client client, Vehicule vehicule, LocalDate dateDebut, LocalDate datefin) {
-        if (dateFin.isBefor(dateDebut) || dateFin.isEqual(dateDebut)) {
-            throw new IllegalArgumentException("La date de fin doit être après la date de début.");
-        }
-        
+    public Reservation(Client client, Vehicule vehicule, LocalDate dateDebut, LocalDate dateFin) {
         this.idReservation = compteur++;
         this.client = client;
         this.vehicule = vehicule;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.montantTotal = 0.0;
-        this.active = false;
+        this.estActive = true;
+        this.montantTotal = calculerMontant();
     }
-
-    // Methodes
 
     public double calculerMontant() {
-        long jours = ChronoUnit.DAYS.between(dateDebut, dateFin);
-        montantTotale = vehicule.calculerTarif() * jours;
-        return this.montantTotal ;
+        // ChronoUnit calcul l'intervalle entre les deux dates
+        long nbJours = ChronoUnit.DAYS.between(dateDebut, dateFin); 
+        if (nbJours <= 0) nbJours = 1; 
+        return vehicule.calculerTarif() * nbJours;
     }
 
-    public void confirmer() {
-        this.active = true;
-    }
+    // Fonctions d'état
+    public void confirmer() { this.estActive = true; }
+    public boolean estActive() { return estActive; }
+    public void terminer() { this.estActive = false; }
 
-    public void annuler() {
-        this.active = false;
-    }
-
-    // Marque la reservation comme terminé après le retour du vehicule
-    public void cloturer() {
-        this.active = false;
-    }
-
-    // Utilisé par Agence pour retrouver la reservation en cours, c'est juste un getter
-    public void estActive() {
-        return this.active ;
-    }
-
-    // Getters
-
-    public int getIdReservation() {
-        return idReservation;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Vehicule getVehicule() {
-        return vehicule;
-    }
-
-    public LocalDate getDateDebut() {
-        return dateDebut;
-    }
-
-    public LocalDate getDatefin() {
-        return dateFin;
-    }
-
-    public double getMontantTotal() {
-        return montantTotal;
-    }
+    // Getters indispensables pour Agence et FenetrePrincipale
+    public int getId() { return idReservation; }
+    public Client getClient() { return client; }
+    public Vehicule getVehicule() { return vehicule; }
+    public LocalDate getDateDebut() { return dateDebut; }
+    public LocalDate getDateFin() { return dateFin; }
+    public double getMontantTotal() { return montantTotal; }
 
     @Override
-    public void toString() {
-        return "reservation{ id: " + idReservation + " , Client: " + client.getNom() + " , Vehicule: " + 
-                vehicule.getImmatriculation() + " , Du: " + dateDebut + " , Au : " 
-                + dateFin + " , Montant: " + montantTotal + " , active " + active + "}";
+    public String toString() {
+        return "Reservation #" + idReservation + " [" + vehicule.getImmatriculation() + "] pour " + client.getNom();
     }
-
 }

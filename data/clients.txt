@@ -1,0 +1,10 @@
+1;Andalla@iam.sn;pass;Andalla;PERMIS;77
+2;Daouda@iam.sn;pass;Daouda;PERMIS;77
+3;Amadou@iam.sn;pass;Amadou;PERMIS;77
+4;Andalla@iam.sn;pass;Andalla;PERMIS;77
+5;Andalla@iam.sn;pass;Andalla;PERMIS;77
+6;Ulysse@iam.sn;pass;Ulysse;PERMIS;77
+7;Moussa@iam.sn;pass;Moussa;PERMIS;77
+8;Ousmane@iam.sn;pass;Ousmane;SN-PERMIS;77
+9;andallambaye@gmail.com;andallambaye;Andalla Mbaye;B216;7788878787
+10;daouda@gmail.com;daouda;Daouda Mbaye;B2;788478376

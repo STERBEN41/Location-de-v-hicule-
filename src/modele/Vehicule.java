@@ -1,18 +1,17 @@
 package modele;
 
-public abstract class Vehicule {
+import java.util.Objects;
 
-    //Attributs
+public abstract class Vehicule {
     private int idVehicule;
     private String immatriculation;
     private String marque;
     private String modele;
     private String categorie;
     protected double tarifBase;
-    private StatutVehicule statutVehicule; // Attribut appartenant à la class Statutvehicule
+    private StatutVehicule statutVehicule;
 
-    // Constructeur 
-    public Vehicule(int idVehicule, String immatriculation, String marque, String modele, String categorie, Double tarifBase) {
+    public Vehicule(int idVehicule, String immatriculation, String marque, String modele, String categorie, double tarifBase) {
         this.idVehicule = idVehicule;
         this.immatriculation = immatriculation;
         this.marque = marque;
@@ -22,7 +21,8 @@ public abstract class Vehicule {
         this.statutVehicule = StatutVehicule.DISPONIBLE;
     }
 
-    // Methodes
+    // --- LOGIQUE MÉTIER & TRANSITIONS D'ÉTATS ---
+    
     public boolean estDisponible() {
         return this.statutVehicule == StatutVehicule.DISPONIBLE;
     }
@@ -31,47 +31,55 @@ public abstract class Vehicule {
         this.statutVehicule = nouveauStatut;
     }
 
-    public abstract double calculerTarif(); // Override dans les sous class donc pas de corps ici 
-
-    // Getters 
-    public int getId() {
-        return this.idVehicule;
+    // Directement mappé sur le Diagramme d'États
+    public void reserver() {
+        if (this.statutVehicule == StatutVehicule.DISPONIBLE) {
+            this.statutVehicule = StatutVehicule.RESERVE;
+        }
     }
 
-    public String getImmatriculation() {
-        return this.immatriculation;
+    public void louer() {
+        if (this.statutVehicule == StatutVehicule.RESERVE) {
+            this.statutVehicule = StatutVehicule.LOUE;
+        }
     }
 
-    public String getMarque() {
-        return this.marque;
+    public void reparer() {
+        if (this.statutVehicule == StatutVehicule.MAINTENANCE) {
+            this.statutVehicule = StatutVehicule.DISPONIBLE;
+        }
     }
 
-    public String getModele() {
-        return this.modele;
-    }
+    public abstract double calculerTarif();
 
-    public String getCategorie() {
-        return this.categorie;
-    }
-
-    public double getTarifBase() {
-        return this.tarifBase;
-    }
-
-    public StatutVehicule getStatut() {
-        return this.statutVehicule;
-    }
-
-    // Setter utilisé par Agence
-    public void setTarifBase(double tarifBase) {
-        this.tarifBase = tarifBase;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicule vehicule = (Vehicule) o;
+        return Objects.equals(immatriculation, vehicule.immatriculation);
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(immatriculation);
+    }
+
+    // Getters & Setters
+    public int getId() { return idVehicule; }
+    public String getImmatriculation() { return immatriculation; }
+    public String getMarque() { return marque; }
+    public String getModele() { return modele; } 
+    public String getCategorie() { return categorie; }
+    public double getTarifBase() { return tarifBase; }
+    public StatutVehicule getStatut() { return statutVehicule; }
+    public void setTarifBase(double tarifBase) { this.tarifBase = tarifBase; }
+    public void setStatut(StatutVehicule statutVehicule) { this.statutVehicule = statutVehicule;}
+    public void setMarque(String marque) { this.marque = marque;}
+    public void setModele(String modele) { this.modele = modele;}
+
+    @Override
     public String toString() {
-        return "Vehicule{id : " + idVehicule + " , matricle : " + immatriculation
-                + " , marque : " + marque + " , model : " + modele + " , category : "
-                + categorie + " , tarif de base : " + tarifBase + " , statut : " + statutVehicule
-                + "}";
+        return "[" + categorie + "] " + marque + " " + modele + " (" + immatriculation + ") - Statut: " + statutVehicule;
     }
 }

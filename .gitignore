@@ -4,8 +4,8 @@
 # Dossier de compilation
 bin/
 
-# macOS
+# Fichiers macOS
 .DS_Store
 
-# VS Code (optionnel)
+# Configuration VS Code (optionnel)
 .vscode/

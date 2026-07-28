@@ -1,0 +1,6 @@
+Citadine;2;SN-456-B;Peugeot;208;Citadine;30250.0;MAINTENANCE
+Utilitaire;3;SN-789-C;Renault;Master;Utilitaire;40000.0;DISPONIBLE
+Citadine;4;SN-124-A;Ford;1908;Citadine;17000.0;DISPONIBLE
+Citadine;5;SN-123-B;Toyota;Rav4;Citadine;50000.0;LOUE
+Citadine;5;SN-538-F;Peugeot;208;Citadine;700000.0;DISPONIBLE
+Citadine;5;SN-378-D;Renault;Master;Citadine;500000.0;DISPONIBLE
