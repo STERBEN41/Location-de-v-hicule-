@@ -1,0 +1,11 @@
+# Fichiers compilés Java
+*.class
+
+# Dossier de compilation
+bin/
+
+# macOS
+.DS_Store
+
+# VS Code (optionnel)
+.vscode/
